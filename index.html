@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Harish Anjana PG College - Attendance System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- 🔐 LOGIN PAGE -->
+<div id="loginPage" class="container">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Enter Username"><br>
+    <input type="password" id="password" placeholder="Enter Password"><br>
+    <button onclick="login()">Login</button>
+</div>
+
+<!-- 🎓 MAIN CONTENT -->
+<div id="mainContent" style="display:none;">
+
+    <div class="header">
+        <h1>Harish Anjana PG College, Chhoti Sadri</h1>
+        <h3>Smart Attendance Management System</h3>
+        <p>
+            Director: Mr. Jaganath Solanki <br>
+            Principal: Dipak Mandela <br>
+            BCA Lecturer: Govind Rajak
+        </p>
+    </div>
+
+    <div class="container">
+        <h2>Add Student Attendance</h2>
+
+        <input type="date" id="date">
+        <input type="text" id="studentName" placeholder="Enter Student Name">
+        <select id="status">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+        </select>
+        <button onclick="addAttendance()">Add</button>
+
+        <h3>Attendance List</h3>
+        <ul id="attendanceList"></ul>
+
+        <h3 id="percentage"></h3>
+
+        <canvas id="attendanceChart" width="300" height="200"></canvas>
+    </div>
+
+</div>
+
+<!-- ✅ SCRIPT LINK BODY KE END ME -->
+<script src="script.js"></script>
+
+</body>
+</html>
