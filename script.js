@@ -1,3 +1,19 @@
+import { getAuth, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+const auth = getAuth();
+
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      document.getElementById("message").innerText = "Login Successful ✅";
+    })
+    .catch((error) => {
+      document.getElementById("message").innerText = error.message;
+    });
+};
 let total = 0;
 let presentCount = 0;
 let chart;
@@ -93,4 +109,5 @@ function drawChart() {
             }]
         }
     });
+
 }
