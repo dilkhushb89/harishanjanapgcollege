@@ -1,42 +1,63 @@
 // 🔥 Firebase Imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-// 🔥 Your Firebase Configuration (Firebase Console se copy karo)
+// 🔥 Firebase Config
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY_HERE",
-  authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
-  projectId: "PASTE_YOUR_PROJECT_ID_HERE",
-  storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
-  messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
-  appId: "PASTE_YOUR_APP_ID_HERE"
+  apiKey: "AIzaSyDKRo7HBTiWdkovLpNXMazKyxhtKzmFl_g",
+  authDomain: "harish-anjana-pg-college.firebaseapp.com",
+  projectId: "harish-anjana-pg-college",
+  storageBucket: "harish-anjana-pg-college.firebasestorage.app",
+  messagingSenderId: "855592419614",
+  appId: "1:855592419614:web:497b42fddbe3347184c90f"
 };
 
 // 🔥 Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// =======================
-// 🔐 ADMIN LOGIN FUNCTION
-// =======================
-
+// 🔐 LOGIN FUNCTION
 window.login = function () {
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
 
-  if (email === "" || password === "") {
-    document.getElementById("message").innerText = "Please enter email and password!";
+  if (!email || !password) {
+    message.innerText = "Please enter email and password!";
+    message.style.color = "red";
     return;
   }
 
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      document.getElementById("message").innerText = "Login Successful ✅";
-      console.log("Logged in user:", userCredential.user);
+    .then(() => {
+      message.style.color = "green";
+      message.innerText = "Login Successful ✅";
+
+      // 🔥 Redirect only if admin.html exists
+      setTimeout(() => {
+        window.location.href = "admin.html";
+      }, 1000);
     })
     .catch((error) => {
-      document.getElementById("message").innerText = error.message;
-      console.error("Login error:", error.message);
+      message.style.color = "red";
+      message.innerText = error.message;
     });
+};
+
+// 🔒 Auto protect admin page
+if (window.location.pathname.includes("admin.html")) {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+    }
+  });
+}
+
+// 🚪 Logout Function
+window.logout = function () {
+  signOut(auth).then(() => {
+    window.location.href = "index.html";
+  });
 };
