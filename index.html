@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harish Anjana PG College - Login</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Login Page</title>
 </head>
 <body>
 
-<div class="container">
-  <h1>Harish Anjana PG College</h1>
-  <h2>Admin Login</h2>
+<h2>Login</h2>
 
-  <input type="email" id="email" placeholder="Enter Email">
-  <input type="password" id="password" placeholder="Enter Password">
-
-  <button onclick="login()">Login</button>
-
-  <p id="message"></p>
+<div id="loginPage">
+  <input type="text" id="username" placeholder="Username"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button type="button" onclick="login()">Login</button>
 </div>
 
-<script type="module" src="script.js"></script>
+<div id="adminPage" style="display:none;">
+  <h2>Welcome Admin</h2>
+  <button type="button" onclick="markAttendance()">Mark Attendance</button>
+  <button type="button" onclick="logout()">Logout</button>
+  <p id="status"></p>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
