@@ -1,9 +1,7 @@
-// 🔥 Firebase Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
-// 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyDKRo7HBTiWdkovLpNXMazKyxhtKzmFl_g",
   authDomain: "harish-anjana-pg-college.firebaseapp.com",
@@ -13,51 +11,62 @@ const firebaseConfig = {
   appId: "1:855592419614:web:497b42fddbe3347184c90f"
 };
 
-// 🔥 Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// 🔐 LOGIN FUNCTION
 window.login = function () {
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const message = document.getElementById("message");
-
-  if (!email || !password) {
-    message.innerText = "Please enter email and password!";
-    message.style.color = "red";
-    return;
-  }
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
-      message.style.color = "green";
-      message.innerText = "Login Successful ✅";
-
-      // 🔥 Redirect only if admin.html exists
-      setTimeout(() => {
-        window.location.href = "admin.html";
-      }, 1000);
+      window.location.href = "admin.html";
     })
     .catch((error) => {
-      message.style.color = "red";
-      message.innerText = error.message;
+      document.getElementById("message").innerText = error.message;
     });
 };
 
-// 🔒 Auto protect admin page
-if (window.location.pathname.includes("admin.html")) {
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "index.html";
-    }
-  });
-}
-
-// 🚪 Logout Function
 window.logout = function () {
   signOut(auth).then(() => {
     window.location.href = "index.html";
   });
 };
+
+window.addAttendance = async function () {
+  const name = document.getElementById("studentName").value;
+  const status = document.getElementById("status").value;
+
+  if (!name) {
+    alert("Enter student name");
+    return;
+  }
+
+  await addDoc(collection(db, "attendance"), {
+    name: name,
+    status: status,
+    date: new Date().toLocaleDateString()
+  });
+
+  alert("Attendance Added Successfully");
+  loadAttendance();
+};
+
+async function loadAttendance() {
+  const list = document.getElementById("attendanceList");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  const querySnapshot = await getDocs(collection(db, "attendance"));
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const li = document.createElement("li");
+    li.innerText = ${data.name} - ${data.status} - ${data.date};
+    list.appendChild(li);
+  });
+}
+
+window.onload = loadAttendance;
