@@ -1,69 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harish Anjana PG College - Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="container">
-
-  <h2>Student Login</h2>
+  <h1>Harish Anjana PG College</h1>
+  <h2>Admin Login</h2>
 
   <input type="email" id="email" placeholder="Enter Email">
-  <br><br>
-
   <input type="password" id="password" placeholder="Enter Password">
-  <br><br>
 
   <button onclick="login()">Login</button>
 
   <p id="message"></p>
-
 </div>
 
-
-<!-- 🔥 Firebase + Login Script -->
-<script type="module">
-
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } 
-  from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDKRo7HBTiWdkovLpNXMazKyxhtKzmFl_g",
-    authDomain: "harish-anjana-pg-college.firebaseapp.com",
-    projectId: "harish-anjana-pg-college",
-    storageBucket: "harish-anjana-pg-college.firebasestorage.app",
-    messagingSenderId: "855592419614",
-    appId: "1:855592419614:web:497b42fddbe3347184c90f"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  window.login = function () {
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    if(email === "" || password === ""){
-      document.getElementById("message").innerText = "Please enter email and password!";
-      return;
-    }
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        document.getElementById("message").innerText = "Login Successful ✅";
-        window.location.href = "admin.html"; // optional redirect
-      })
-      .catch((error) => {
-        document.getElementById("message").innerText = error.message;
-      });
-
-  };
-
-</script>
-
+<script type="module" src="script.js"></script>
 </body>
 </html>
