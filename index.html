@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #adminPage { display: none; }
+    button { margin: 5px 0; padding: 8px 15px; }
+  </style>
 </head>
 <body>
 
 <h2>Login</h2>
-
 <div id="loginPage">
   <input type="text" id="username" placeholder="Username"><br><br>
   <input type="password" id="password" placeholder="Password"><br><br>
-  <button type="button" onclick="login()">Login</button>
+  <button id="loginBtn">Login</button>
 </div>
 
-<div id="adminPage" style="display:none;">
+<div id="adminPage">
   <h2>Welcome Admin</h2>
-  <button type="button" onclick="markAttendance()">Mark Attendance</button>
-  <button type="button" onclick="logout()">Logout</button>
+  <button id="attendanceBtn">Mark Attendance</button>
+  <button id="logoutBtn">Logout</button>
   <p id="status"></p>
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
